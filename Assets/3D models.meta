@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 528d7d7fddba1ae439e356d777ac3a61
+=======
+guid: a8d212ee1e92ee546a2cc9e6b831362e
+>>>>>>> bf9a8ea... added random planets
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

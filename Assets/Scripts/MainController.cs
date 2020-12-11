@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainController : MonoBehaviour
 {
     public int gridSize;
-    public GameObject nodePrefab;
+    public GameObject[] nodePrefabs;
     public Transform nodeParent;
     public Transform cameraTarget;
 
@@ -38,7 +38,7 @@ public class MainController : MonoBehaviour
                     }
                     if (!occupiedPositions.Contains(pos))
                     {
-                        GameObject g = Instantiate(nodePrefab, nodeParent);
+                        GameObject g = Instantiate(nodePrefabs[Random.Range(0, 5)], nodeParent);
                         g.transform.position = pos;
                         occupiedPositions.Add(pos);
                     }
