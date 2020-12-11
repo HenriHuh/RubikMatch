@@ -7,20 +7,13 @@ public class MainController : MonoBehaviour
     public int gridSize;
     public GameObject nodePrefab;
     public Transform nodeParent;
+    public Transform cameraTarget;
 
     Vector3[] sideDirection = { Vector3.right, Vector3.left, Vector3.up, Vector3.down, Vector3.forward, Vector3.back };
 
     void Start()
     {
         InitCube();
-    }
-
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            transform.Rotate(new Vector3(Input.GetAxis("Mouse Y") , -Input.GetAxis("Mouse X") * Time.deltaTime * 50));
-        }
     }
 
     void InitCube()
