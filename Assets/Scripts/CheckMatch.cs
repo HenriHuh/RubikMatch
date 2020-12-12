@@ -1,17 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckMatch : MonoBehaviour
 {
     static Vector3[] sides = { Vector3.right, Vector3.up, Vector3.forward };
     static List<GameObject> nodesToCheck = new List<GameObject>();
     public static List<GameObject> nodesToBeDeleted = new List<GameObject>();
+    public List<Text> texts = new List<Text>();
     const float maxNodeDeletionTime = 1;
     static float nodeDeletionTime = 0;
+    Dictionary<string, int> Planets = new Dictionary<string, int>();
+    int[] planetsLeft = { 15, 15, 15, 15, 15 };
+    public EndGame endGame;
+    
     void Start()
     {
-        
+        Planets.Add("earth", 0);
+        Planets.Add("moon", 1);
+        Planets.Add("saturn", 2);
+        Planets.Add("mars", 3);
+        Planets.Add("star", 4);
     }
 
     void Update()
@@ -30,8 +40,28 @@ public class CheckMatch : MonoBehaviour
             {
                 GameObject node = nodesToBeDeleted[i];
                 Vector3 pos = node.transform.position;
+
+                string nodeName = node.name.Replace("(Clone)", "").Trim().ToLower();
+                int index = Planets[nodeName];
+                if(GetComponent<RotationController>().movesLeft != 20) {
+                    planetsLeft[index] = Mathf.Max(0, planetsLeft[index]-1);
+                    texts[index].text = "x" + planetsLeft[index];
+                }
                 Destroy(node);
                 MainController.instance.NewNode(pos);
+            }
+
+            bool gameWon = true;
+            foreach(int left in planetsLeft)
+            {
+                if(left > 0)
+                {
+                    gameWon = false;
+                }
+            }
+            if(gameWon)
+            {
+                endGame.End(true);
             }
             nodesToBeDeleted.Clear();
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RotationController : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class RotationController : MonoBehaviour
     private Vector2 mousePos;
     private Vector3 hitPos;
     private bool isChecked = true;
+    public Text movesLeftText;
+    public int movesLeft = 20;
+    public EndGame endGame;
 
     Matrix4x4 rotX(float angle)
     {
@@ -100,6 +104,8 @@ public class RotationController : MonoBehaviour
         }
         rotTimeLeft = animMultiplier;
         isChecked = false;
+        movesLeft--;
+        movesLeftText.text = movesLeft + " moves left";
     }
 
     // Update is called once per frame
@@ -118,7 +124,7 @@ public class RotationController : MonoBehaviour
             CheckMatch.CheckAllNodes();
             isChecked = true;
         }
-        else if(CheckMatch.nodesToBeDeleted.Count == 0)
+        else if(CheckMatch.nodesToBeDeleted.Count == 0 && movesLeft > 0)
         { 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
@@ -173,9 +179,18 @@ public class RotationController : MonoBehaviour
                                 filteredObjects.Add(go);
                             }
                         }
+
+                        x = 0;
+                        y = 0;
+                        z = 0;
                     }
                 }
             }
+        }
+
+        if(CheckMatch.nodesToBeDeleted.Count == 0 && movesLeft == 0)
+        {
+            endGame.End(false);
         }
     }
 }
