@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 839498992}
   - component: {fileID: 839498994}
   - component: {fileID: 839498990}
+  - component: {fileID: 839498991}
   m_Layer: 0
   m_Name: RubikBase
   m_TagString: Untagged
@@ -310,6 +311,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 420ce0612c7526d4fb1027eaed763c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &839498991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839498989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f6d813ee5bd7f4ebebb43c3fb7a56b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!33 &839498992

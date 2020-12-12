@@ -18,11 +18,7 @@ public class CheckMatch : MonoBehaviour
         {
             nodesToCheck.Add(g);
         }
-    }
-
-    private void Update()
-    {
-        if (nodesToCheck.Count > 0)
+        while (nodesToCheck.Count > 0)
         {
             CheckAdjacentNodes(nodesToCheck[0]);
             nodesToCheck.RemoveAt(0);
@@ -43,17 +39,17 @@ public class CheckMatch : MonoBehaviour
         foreach (Vector3 vec in sides) //Check diagonal of X, Y, Z
         {
             //Positive vector
-            while (MainController.allObjects.Find(o => o.transform.position == currentPosition + vec && o.name == node.name))
+            while (nodesToCheck.Find(o => ComparePos(o.transform.position, currentPosition + vec) && o.name == node.name))
             {
-                currentMatches.Add(MainController.allObjects.Find(o => o.transform.position == currentPosition + vec && o.name == node.name));
+                currentMatches.Add(nodesToCheck.Find(o => ComparePos(o.transform.position, currentPosition + vec) && o.name == node.name));
                 currentPosition += vec;
             }
 
             //Negative vector
             currentPosition = node.transform.position;
-            while (MainController.allObjects.Find(o => o.transform.position == currentPosition - vec && o.name == node.name))
+            while (nodesToCheck.Find(o => ComparePos(o.transform.position, currentPosition - vec) && o.name == node.name))
             {
-                currentMatches.Add(MainController.allObjects.Find(o => o.transform.position == currentPosition - vec && o.name == node.name));
+                currentMatches.Add(nodesToCheck.Find(o => ComparePos(o.transform.position, currentPosition - vec) && o.name == node.name));
                 currentPosition -= vec;
             }
 
@@ -79,5 +75,10 @@ public class CheckMatch : MonoBehaviour
 
             if (nodesToCheck.Contains(match)) nodesToCheck.Remove(match);
         }
+    }
+
+    public static bool ComparePos(Vector3 a, Vector3 b)
+    {
+        return Vector3.SqrMagnitude(a - b) < 0.1f;
     }
 }

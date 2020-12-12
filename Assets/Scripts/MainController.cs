@@ -19,8 +19,8 @@ public class MainController : MonoBehaviour
     void Awake()
     {
         InitCube();
-        CheckMatch.CheckAllNodes();
         instance = this;
+        CheckMatch.CheckAllNodes();
     }
 
     void InitCube()
@@ -49,7 +49,6 @@ public class MainController : MonoBehaviour
                         g.transform.position = pos;
                         occupiedPositions.Add(pos);
                         allObjects.Add(g);
-
                     }
                 }
             }
