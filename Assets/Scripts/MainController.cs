@@ -13,6 +13,7 @@ public class MainController : MonoBehaviour
     public static Vector3[] sideDirection = { Vector3.right, Vector3.left, Vector3.up, Vector3.down, Vector3.forward, Vector3.back };
     public static List<GameObject> allObjects = new List<GameObject>();
 
+
     public static MainController instance;
 
     void Awake()
@@ -48,6 +49,7 @@ public class MainController : MonoBehaviour
                         g.transform.position = pos;
                         occupiedPositions.Add(pos);
                         allObjects.Add(g);
+
                     }
                 }
             }
