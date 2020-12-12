@@ -14,22 +14,12 @@ public class CheckMatch : MonoBehaviour
         
     }
 
-    public static void CheckAllNodes()
+    void Update()
     {
-        foreach (GameObject g in MainController.allObjects)
-        {
-            nodesToCheck.Add(g);
-        }
-        while (nodesToCheck.Count > 0)
-        {
-            CheckAdjacentNodes(nodesToCheck[0]);
-            nodesToCheck.RemoveAt(0);
-        }
-
-        if(nodeDeletionTime > 0)
+        if (nodeDeletionTime > 0)
         {
             nodeDeletionTime -= Time.deltaTime;
-            foreach(GameObject node in nodesToBeDeleted)
+            foreach (GameObject node in nodesToBeDeleted)
             {
                 node.GetComponentInChildren<Renderer>().material.SetFloat("_Metallic", maxNodeDeletionTime - nodeDeletionTime);
             }
@@ -44,6 +34,19 @@ public class CheckMatch : MonoBehaviour
                 MainController.instance.NewNode(pos);
             }
             nodesToBeDeleted.Clear();
+        }
+    }
+
+    public static void CheckAllNodes()
+    {
+        foreach (GameObject g in MainController.allObjects)
+        {
+            nodesToCheck.Add(g);
+        }
+        while (nodesToCheck.Count > 0)
+        {
+            CheckAdjacentNodes(nodesToCheck[0]);
+            nodesToCheck.RemoveAt(0);
         }
     }
 
