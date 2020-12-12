@@ -292,6 +292,7 @@ GameObject:
   - component: {fileID: 839498993}
   - component: {fileID: 839498992}
   - component: {fileID: 839498994}
+  - component: {fileID: 839498990}
   m_Layer: 0
   m_Name: RubikBase
   m_TagString: Untagged
@@ -299,6 +300,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &839498990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839498989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420ce0612c7526d4fb1027eaed763c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &839498992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -334,7 +347,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: 2
-  nodePrefab: {fileID: 4585819984747643015, guid: f159d384ca29d8a47b5631ae6faf923f, type: 3}
+  nodePrefabs:
+  - {fileID: 742265195008178803, guid: 6f93f5e3c597e884480b67b9448aab2a, type: 3}
+  - {fileID: 6784946991310774896, guid: ba2c94d816a1ce9429842d9d529d9fa8, type: 3}
+  - {fileID: 5826087010084446934, guid: 55352a9162a2f0544ab8fd0cd8074d5e, type: 3}
+  - {fileID: 5526069674144668659, guid: 3fdc385159670814a8c407582751707e, type: 3}
+  - {fileID: 5992000029940512621, guid: 4060eb73961daa64598242ae4f84fe13, type: 3}
   nodeParent: {fileID: 839498993}
   cameraTarget: {fileID: 1467158928}
 --- !u!1 &963194225

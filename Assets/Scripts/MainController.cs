@@ -9,11 +9,17 @@ public class MainController : MonoBehaviour
     public Transform nodeParent;
     public Transform cameraTarget;
 
-    Vector3[] sideDirection = { Vector3.right, Vector3.left, Vector3.up, Vector3.down, Vector3.forward, Vector3.back };
+    //Static objects to be used globally
+    public static Vector3[] sideDirection = { Vector3.right, Vector3.left, Vector3.up, Vector3.down, Vector3.forward, Vector3.back };
+    public static List<GameObject> allObjects = new List<GameObject>();
 
-    void Start()
+    public static MainController instance;
+
+    void Awake()
     {
         InitCube();
+        CheckMatch.CheckAllNodes();
+        instance = this;
     }
 
     void InitCube()
@@ -41,9 +47,18 @@ public class MainController : MonoBehaviour
                         GameObject g = Instantiate(nodePrefabs[Random.Range(0, 5)], nodeParent);
                         g.transform.position = pos;
                         occupiedPositions.Add(pos);
+                        allObjects.Add(g);
                     }
                 }
             }
         }
+    }
+
+    public void NewNode(Vector3 pos)
+    {
+        GameObject g = Instantiate(nodePrefabs[Random.Range(0, 5)], nodeParent);
+        g.transform.position = pos;
+        allObjects.Add(g);
+        CheckMatch.CheckAdjacentNodes(g);
     }
 }
