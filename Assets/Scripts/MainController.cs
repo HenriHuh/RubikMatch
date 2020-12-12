@@ -43,7 +43,7 @@ public class MainController : MonoBehaviour
                     {
                         pos = side * gridSize + new Vector3(x, y, 0);
                     }
-                    if (!occupiedPositions.Contains(pos))
+                    if (occupiedPositions.Find(occupiedPos => HelpFunctions.V3Equal(pos, occupiedPos)) == Vector3.zero)
                     {
                         GameObject g = Instantiate(nodePrefabs[Random.Range(0, 5)], nodeParent);
                         g.transform.position = pos;

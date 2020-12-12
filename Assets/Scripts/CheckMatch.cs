@@ -6,7 +6,9 @@ public class CheckMatch : MonoBehaviour
 {
     static Vector3[] sides = { Vector3.right, Vector3.up, Vector3.forward };
     static List<GameObject> nodesToCheck = new List<GameObject>();
-
+    public static List<GameObject> nodesToBeDeleted = new List<GameObject>();
+    const float maxNodeDeletionTime = 1;
+    static float nodeDeletionTime = 0;
     void Start()
     {
         
@@ -23,9 +25,27 @@ public class CheckMatch : MonoBehaviour
             CheckAdjacentNodes(nodesToCheck[0]);
             nodesToCheck.RemoveAt(0);
         }
+
+        if(nodeDeletionTime > 0)
+        {
+            nodeDeletionTime -= Time.deltaTime;
+            foreach(GameObject node in nodesToBeDeleted)
+            {
+                node.GetComponentInChildren<Renderer>().material.SetFloat("_Metallic", maxNodeDeletionTime - nodeDeletionTime);
+            }
+        }
+        else
+        {
+            for (int i = nodesToBeDeleted.Count - 1; i >= 0; i--)
+            {
+                GameObject node = nodesToBeDeleted[i];
+                Vector3 pos = node.transform.position;
+                Destroy(node);
+                MainController.instance.NewNode(pos);
+            }
+            nodesToBeDeleted.Clear();
+        }
     }
-
-
 
     public static void CheckAdjacentNodes(GameObject node)
     {
@@ -42,11 +62,13 @@ public class CheckMatch : MonoBehaviour
             while (nodesToCheck.Find(o => ComparePos(o.transform.position, currentPosition + vec) && o.name == node.name))
             {
                 currentMatches.Add(nodesToCheck.Find(o => ComparePos(o.transform.position, currentPosition + vec) && o.name == node.name));
+
                 currentPosition += vec;
             }
 
             //Negative vector
             currentPosition = node.transform.position;
+
             while (nodesToCheck.Find(o => ComparePos(o.transform.position, currentPosition - vec) && o.name == node.name))
             {
                 currentMatches.Add(nodesToCheck.Find(o => ComparePos(o.transform.position, currentPosition - vec) && o.name == node.name));
@@ -64,14 +86,13 @@ public class CheckMatch : MonoBehaviour
         if (totalMatches.Count > 0)
         {
             MainController.allObjects.Remove(node);
-            MainController.instance.NewNode(node.transform.position);
-            Destroy(node);
+            nodesToBeDeleted.Add(node);
         }
         foreach (GameObject match in totalMatches)
         {
             MainController.allObjects.Remove(match);
-            MainController.instance.NewNode(match.transform.position);
-            Destroy(match);
+            nodesToBeDeleted.Add(match);
+            nodeDeletionTime = maxNodeDeletionTime;
 
             if (nodesToCheck.Contains(match)) nodesToCheck.Remove(match);
         }

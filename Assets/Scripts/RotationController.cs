@@ -7,6 +7,12 @@ public class RotationController : MonoBehaviour
     Matrix4x4 rot;
     int rotTimeLeft;
     List<GameObject> filteredObjects = new List<GameObject>();
+    private int x;
+    private int y;
+    private int z;
+    private Vector2 mousePos;
+    private Vector3 hitPos;
+    private bool isChecked = true;
 
     Matrix4x4 rotX(float angle)
     {
@@ -93,18 +99,12 @@ public class RotationController : MonoBehaviour
             rot = rotZ(-deg90);
         }
         rotTimeLeft = animMultiplier;
+        isChecked = false;
     }
-
-    private int x;
-    private int y;
-    private int z;
-    private Vector2 mousePos;
-    private Vector3 hitPos;
 
     // Update is called once per frame
     void Update()
     {
-
         if (rotTimeLeft > 0)
         {
             foreach(GameObject go in filteredObjects) 
@@ -112,8 +112,13 @@ public class RotationController : MonoBehaviour
                 go.transform.position = rot * go.transform.position;
             }
             rotTimeLeft--;
-        } 
-        else
+        }
+        else if(rotTimeLeft == 0 && !isChecked)
+        {
+            CheckMatch.CheckAllNodes();
+            isChecked = true;
+        }
+        else if(CheckMatch.nodesToBeDeleted.Count == 0)
         { 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
