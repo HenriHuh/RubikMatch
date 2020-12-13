@@ -12,11 +12,19 @@ public class CheckMatch : MonoBehaviour
     const float maxNodeDeletionTime = 1;
     static float nodeDeletionTime = 0;
     Dictionary<string, int> Planets = new Dictionary<string, int>();
-    int[] planetsLeft = { 15, 15, 15, 15, 15 };
+    int[] planetsLeft = { 8, 8, 8, 8, 8 };
+    public static int currentLevel;
     public EndGame endGame;
-    
+    bool ended = false;
+
     void Start()
     {
+        for (int i = 0; i < planetsLeft.Length; i++)
+        {
+            planetsLeft[i] += currentLevel * 2;
+            texts[i].text = "x" + planetsLeft[i];
+        }
+
         Planets.Add("earth", 0);
         Planets.Add("moon", 1);
         Planets.Add("saturn", 2);
@@ -36,6 +44,7 @@ public class CheckMatch : MonoBehaviour
         }
         else
         {
+            if (ended) return;
             for (int i = nodesToBeDeleted.Count - 1; i >= 0; i--)
             {
                 GameObject node = nodesToBeDeleted[i];
@@ -43,7 +52,7 @@ public class CheckMatch : MonoBehaviour
 
                 string nodeName = node.name.Replace("(Clone)", "").Trim().ToLower();
                 int index = Planets[nodeName];
-                if(GetComponent<RotationController>().movesLeft != 20) {
+                if(RotationController.movesLeft != 20) {
                     planetsLeft[index] = Mathf.Max(0, planetsLeft[index]-1);
                     texts[index].text = "x" + planetsLeft[index];
                 }
@@ -61,6 +70,8 @@ public class CheckMatch : MonoBehaviour
             }
             if(gameWon)
             {
+                ended = true;
+                currentLevel++;
                 endGame.End(true);
             }
             if (nodesToBeDeleted.Count > 0) StartCoroutine(LateCheck());

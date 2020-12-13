@@ -15,8 +15,14 @@ public class RotationController : MonoBehaviour
     private Vector3 hitPos;
     private bool isChecked = true;
     public Text movesLeftText;
-    public int movesLeft = 20;
+    public static int movesLeft = 20;
     public EndGame endGame;
+
+    private void Start()
+    {
+        movesLeft = 12 + CheckMatch.currentLevel;
+        movesLeftText.text = movesLeft + " moves left";
+    }
 
     Matrix4x4 rotX(float angle)
     {
