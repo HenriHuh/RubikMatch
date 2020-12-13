@@ -20,7 +20,7 @@ public class RotationController : MonoBehaviour
 
     private void Start()
     {
-        movesLeft = 12 + CheckMatch.currentLevel;
+        movesLeft = 12 + CheckMatch.currentLevel * 2;
         movesLeftText.text = movesLeft + " moves left";
     }
 

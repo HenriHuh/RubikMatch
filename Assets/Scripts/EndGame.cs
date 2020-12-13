@@ -9,18 +9,29 @@ public class EndGame : MonoBehaviour
     public Text winText;
     public AudioSource victory;
     public AudioSource defeat;
+    public Text continueText;
 
     public void End(bool win)
     {
         transform.GetChild(0).gameObject.SetActive(true);
         if(win)
         {
-            winText.text = "YOU WON!";
+            if (CheckMatch.currentLevel == 4)
+            {
+                winText.text = "GAME COMPLETE!";
+                continueText.text = "Play again";
+            }
+            else
+            {
+                winText.text = "LEVEL " + (CheckMatch.currentLevel + 1).ToString() + " COMPLETE!";
+            }
+
             victory.Play();
         }
         else
         {
             winText.text = "YOU LOST...";
+            continueText.text = "Retry";
             defeat.Play();
         }
     }

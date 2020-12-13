@@ -17,6 +17,8 @@ public class CheckMatch : MonoBehaviour
     public EndGame endGame;
     public AudioSource plopSound;
     bool ended = false;
+    public Color[] levelColors;
+    public Light midLight;
 
     void Start()
     {
@@ -25,6 +27,8 @@ public class CheckMatch : MonoBehaviour
             planetsLeft[i] += currentLevel * 2;
             texts[i].text = "x" + planetsLeft[i];
         }
+        midLight.color = levelColors[currentLevel];
+        midLight.transform.GetChild(0).GetComponent<Light>().color = levelColors[currentLevel];
 
         Planets.Add("earth", 0);
         Planets.Add("moon", 1);
