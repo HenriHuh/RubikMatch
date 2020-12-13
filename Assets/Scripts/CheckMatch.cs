@@ -14,6 +14,7 @@ public class CheckMatch : MonoBehaviour
     Dictionary<string, int> Planets = new Dictionary<string, int>();
     int[] planetsLeft = { 15, 15, 15, 15, 15 };
     public EndGame endGame;
+    public AudioSource plopSound;
     
     void Start()
     {
@@ -48,6 +49,7 @@ public class CheckMatch : MonoBehaviour
                     texts[index].text = "x" + planetsLeft[index];
                 }
                 Destroy(node);
+                plopSound.Play();
                 MainController.instance.NewNode(pos);
             }
 
