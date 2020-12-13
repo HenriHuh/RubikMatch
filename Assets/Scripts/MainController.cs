@@ -58,6 +58,9 @@ public class MainController : MonoBehaviour
     public void NewNode(Vector3 pos)
     {
         GameObject g = Instantiate(nodePrefabs[Random.Range(0, 5)], nodeParent);
+        pos.x = (int)pos.x;
+        pos.y = (int)pos.y;
+        pos.z = (int)pos.z;
         g.transform.position = pos;
         allObjects.Add(g);
         CheckMatch.CheckAdjacentNodes(g);

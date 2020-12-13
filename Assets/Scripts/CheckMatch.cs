@@ -63,9 +63,17 @@ public class CheckMatch : MonoBehaviour
             {
                 endGame.End(true);
             }
+            if (nodesToBeDeleted.Count > 0) StartCoroutine(LateCheck());
             nodesToBeDeleted.Clear();
         }
     }
+
+    IEnumerator LateCheck()
+    {
+        yield return new WaitForEndOfFrame();
+        CheckAllNodes();
+    }
+
 
     public static void CheckAllNodes()
     {
