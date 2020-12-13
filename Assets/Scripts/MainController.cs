@@ -23,6 +23,30 @@ public class MainController : MonoBehaviour
         CheckMatch.CheckAllNodes();
     }
 
+    private float[] chance = { 100f, 100f, 100f, 100f, 100f };
+    int weightedRandom()
+    {
+        float max = 0;
+        foreach(float f in chance)
+        {
+            max += f;
+        }
+        float randomNum = Random.Range(0, max);
+
+        for(int i = 0; i < chance.Length; i++)
+        {
+            if(randomNum < chance[i])
+            {
+                chance[i] *= 0.9f;
+                return i;
+            } else
+            {
+                randomNum -= chance[i];
+            }
+        }
+        return -1; //ERROR
+    }
+
     void InitCube()
     {
         List<Vector3> occupiedPositions = new List<Vector3>();
@@ -45,7 +69,7 @@ public class MainController : MonoBehaviour
                     }
                     if (occupiedPositions.Find(occupiedPos => HelpFunctions.V3Equal(pos, occupiedPos)) == Vector3.zero)
                     {
-                        GameObject g = Instantiate(nodePrefabs[Random.Range(0, 5)], nodeParent);
+                        GameObject g = Instantiate(nodePrefabs[weightedRandom()], nodeParent);
                         g.transform.position = pos;
                         occupiedPositions.Add(pos);
                         allObjects.Add(g);
@@ -57,7 +81,7 @@ public class MainController : MonoBehaviour
 
     public void NewNode(Vector3 pos)
     {
-        GameObject g = Instantiate(nodePrefabs[Random.Range(0, 5)], nodeParent);
+        GameObject g = Instantiate(nodePrefabs[weightedRandom()], nodeParent);
         pos.x = (int)pos.x;
         pos.y = (int)pos.y;
         pos.z = (int)pos.z;
